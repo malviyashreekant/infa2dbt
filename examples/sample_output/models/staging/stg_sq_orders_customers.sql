@@ -1,0 +1,13 @@
+{{ config(materialized='view') }}
+
+-- Replaces Informatica Source Qualifier SQ_ORDERS_CUSTOMERS
+SELECT ORDERS.ORDER_ID AS ORDER_ID,
+    ORDERS.CUST_ID AS CUST_ID,
+    ORDERS.AMOUNT AS AMOUNT,
+    ORDERS.STATUS AS STATUS,
+    ORDERS.ORDER_DT AS ORDER_DT,
+    CUSTOMERS.CUST_NAME AS CUST_NAME
+FROM {{ ref('stg_orders') }} ORDERS,
+     {{ ref('stg_customers') }} CUSTOMERS
+WHERE (ORDERS.CUST_ID = CUSTOMERS.CUST_ID)
+  AND (ORDERS.STATUS <> 'X')

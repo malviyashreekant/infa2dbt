@@ -1,0 +1,14 @@
+infa_migration:
+  target: dev
+  outputs:
+    dev:
+      type: oracle
+      user: '{{ env_var(''DBT_ORACLE_USER'') }}'
+      pass: '{{ env_var(''DBT_ORACLE_PASSWORD'') }}'
+      protocol: tcp
+      host: '{{ env_var(''DBT_ORACLE_HOST'') }}'
+      port: 1521
+      service: '{{ env_var(''DBT_ORACLE_SERVICE'') }}'
+      database: '{{ env_var(''DBT_ORACLE_DATABASE'') }}'
+      schema: '{{ env_var(''DBT_ORACLE_SCHEMA'') }}'
+      threads: 4

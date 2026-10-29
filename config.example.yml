@@ -1,0 +1,14 @@
+project_name: infa_migration
+source_name: raw                 # dbt source name for tables without an owner
+default_source_schema: ""        # schema for source tables that carry no owner in the XML
+legacy_schema_var: legacy_schema # dbt var holding the schema Informatica loaded into (for recon)
+
+sequence_mode: row_number        # row_number | oracle_sequence
+no_update_strategy_load: table   # table | incremental_append
+int_materialization: view        # view | ephemeral
+
+dim_prefixes: ["DIM_", "D_"]     # target names starting with these become dim_ models
+
+parameters: {}                   # e.g. { RUN_DATE: "2024-01-01" } overrides $$RUN_DATE defaults
+
+function_overrides: {}           # e.g. { MYFUNC: "NVL({0}, {1})" }

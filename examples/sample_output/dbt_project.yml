@@ -1,0 +1,27 @@
+name: infa_migration
+version: 1.0.0
+config-version: 2
+profile: infa_migration
+model-paths:
+- models
+analysis-paths:
+- analyses
+macro-paths:
+- macros
+test-paths:
+- tests
+target-path: target
+clean-targets:
+- target
+- dbt_packages
+vars:
+  legacy_schema: LEGACY_SCHEMA
+  min_amt: '0'
+models:
+  infa_migration:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table

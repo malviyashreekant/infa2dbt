@@ -1,0 +1,111 @@
+[
+  {
+    "expressions": {
+      "AGG_CUST": {
+        "flagged": 0,
+        "total": 4
+      },
+      "JNR_CUST_ORDERS": {
+        "flagged": 0,
+        "total": 1
+      }
+    },
+    "instances": [
+      "AGG_CUST",
+      "CUSTOMERS",
+      "DIM_CUST_SUMMARY",
+      "JNR_CUST_ORDERS",
+      "LKP_SEG",
+      "ORDERS",
+      "RNK_TOP",
+      "SP_AUDIT",
+      "SQ_CUSTOMERS",
+      "SQ_ORDERS",
+      "SRT_CUST"
+    ],
+    "mapping": "m_customer_summary",
+    "models": [
+      "dim_cust_summary",
+      "int_rnk_top",
+      "stg_customers",
+      "stg_orders",
+      "stg_sq_customers",
+      "stg_sq_orders"
+    ],
+    "review": [
+      {
+        "original": "",
+        "reason": "Rank is not auto-converted: use RANK()/ROW_NUMBER() OVER (PARTITION BY group ports ORDER BY rank port) and filter on the Top/Bottom N attribute",
+        "where": "m_customer_summary:RNK_TOP"
+      },
+      {
+        "original": "",
+        "reason": "Stored Procedure has no connections, so it cannot be converted; if it is called from an expression or session, replace it manually",
+        "where": "m_customer_summary:SP_AUDIT"
+      }
+    ],
+    "warnings": [
+      "m_customer_summary:DIM_CUST_SUMMARY: no Update Strategy: assumed truncate-and-load (table materialization)",
+      "m_customer_summary:JNR_CUST_ORDERS: join keys: PowerCenter may treat NULL keys as equal, SQL does not; verify NULL join keys",
+      "m_customer_summary:LKP_SEG: first/last match uses PowerCenter's default ORDER BY on the lookup ports; verify",
+      "m_customer_summary:SRT_CUST: ORDER BY is kept for traceability; it only matters if a later step depends on row order"
+    ]
+  },
+  {
+    "expressions": {
+      "EXP_CALC": {
+        "flagged": 0,
+        "total": 7
+      },
+      "FIL_VALID": {
+        "flagged": 0,
+        "total": 1
+      },
+      "RTR_SPLIT.HIGH": {
+        "flagged": 0,
+        "total": 1
+      },
+      "RTR_SPLIT.LOW": {
+        "flagged": 0,
+        "total": 1
+      },
+      "UPD_HIGH": {
+        "flagged": 0,
+        "total": 1
+      }
+    },
+    "instances": [
+      "CUSTOMERS",
+      "EXP_CALC",
+      "FCT_ORDERS_HIGH",
+      "FCT_ORDERS_LOW",
+      "FIL_VALID",
+      "LKP_REGION",
+      "ORDERS",
+      "RTR_SPLIT",
+      "SEQ_KEY",
+      "SQ_ORDERS_CUSTOMERS",
+      "UPD_HIGH"
+    ],
+    "mapping": "m_orders",
+    "models": [
+      "fct_orders_high",
+      "fct_orders_high__deletes",
+      "fct_orders_high__rejects",
+      "fct_orders_low",
+      "int_fil_valid",
+      "int_rtr_split_low",
+      "int_upd_high",
+      "stg_customers",
+      "stg_orders",
+      "stg_sq_orders_customers"
+    ],
+    "review": [],
+    "warnings": [
+      "m_orders:FCT_ORDERS_LOW: no Update Strategy: assumed truncate-and-load (table materialization)",
+      "m_orders:LKP_REGION: first/last match uses PowerCenter's default ORDER BY on the lookup ports; verify",
+      "m_orders:SEQ_KEY: ROW_NUMBER() surrogate keys restart every run and are not stable across runs",
+      "m_orders:SQ_ORDERS_CUSTOMERS: Source Qualifier join/filter copied verbatim (SQL); check column qualifiers"
+    ]
+  }
+]
