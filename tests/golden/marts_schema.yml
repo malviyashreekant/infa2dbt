@@ -1,0 +1,65 @@
+version: 2
+models:
+- name: dim_cust_summary
+  description: Target DIM_CUST_SUMMARY
+  columns:
+  - name: CUST_ID
+    tests:
+    - not_null
+    - unique
+  - name: CUST_NAME
+  - name: SEGMENT
+  - name: TOTAL_AMT
+  - name: ORDER_CNT
+  - name: DBT_UPDATED_AT
+    description: 'Lineage: when dbt last loaded this row'
+    tests:
+    - not_null
+- name: fct_orders_high
+  description: Target FCT_ORDERS_HIGH
+  columns:
+  - name: ORDER_ID
+    tests:
+    - not_null
+    - unique
+  - name: AMOUNT
+  - name: BAND
+    tests:
+    - dbt_utils.expression_is_true:
+        expression: BAND = 'HIGH'
+  - name: STATUS_DESC
+    tests:
+    - accepted_values:
+        values:
+        - Closed
+        - Open
+        - Other
+  - name: REGION
+  - name: SK
+  - name: DBT_UPDATED_AT
+    description: 'Lineage: when dbt last loaded this row'
+    tests:
+    - not_null
+- name: fct_orders_low
+  description: Target FCT_ORDERS_LOW
+  columns:
+  - name: ORDER_ID
+    tests:
+    - not_null
+    - unique
+  - name: AMOUNT
+  - name: BAND
+    tests:
+    - dbt_utils.expression_is_true:
+        expression: BAND = 'LOW'
+  - name: STATUS_DESC
+    tests:
+    - accepted_values:
+        values:
+        - Closed
+        - Open
+        - Other
+  - name: DBT_UPDATED_AT
+    description: 'Lineage: when dbt last loaded this row'
+    tests:
+    - not_null

@@ -1,0 +1,43 @@
+version: 2
+models:
+- name: fct_orders_high__deletes
+  description: Rows fct_orders_high must delete
+- name: fct_orders_high__rejects
+  description: Rejected rows for fct_orders_high
+- name: int_fil_valid
+  description: Replaces EXP_CALC (Expression), FIL_VALID (Filter)
+  columns:
+  - name: ORDER_ID
+  - name: AMOUNT
+  - name: O_BAND
+  - name: O_STATUS_DESC
+  - name: O_REGION
+  - name: O_ORDER_SK
+- name: int_rnk_top
+  description: Replaces JNR_CUST_ORDERS (Joiner), AGG_CUST (Aggregator), LKP_SEG (Lookup Procedure), SRT_CUST
+    (Sorter), RNK_TOP (Rank)
+  columns:
+  - name: IN_CUST_ID
+  - name: IN_CUST_NAME
+  - name: IN_TOTAL
+  - name: IN_CNT
+  - name: SEGMENT
+  - name: RANKINDEX
+- name: int_rtr_split_low
+  description: Replaces RTR_SPLIT.LOW (Router Group)
+  columns:
+  - name: ORDER_ID2
+  - name: AMOUNT2
+  - name: O_BAND2
+  - name: O_STATUS_DESC2
+  - name: O_REGION2
+  - name: O_ORDER_SK2
+- name: int_upd_high
+  description: Replaces RTR_SPLIT.HIGH (Router Group), UPD_HIGH (Update Strategy)
+  columns:
+  - name: ORDER_ID
+  - name: AMOUNT
+  - name: O_BAND
+  - name: O_STATUS_DESC
+  - name: O_REGION
+  - name: O_ORDER_SK

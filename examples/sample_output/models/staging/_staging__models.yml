@@ -1,0 +1,35 @@
+version: 2
+models:
+- name: stg_customers
+  description: Staged copy of source CUSTOMERS
+  columns:
+  - name: CUST_ID
+  - name: CUST_NAME
+  - name: SEGMENT
+- name: stg_orders
+  description: Staged copy of source ORDERS
+  columns:
+  - name: ORDER_ID
+  - name: CUST_ID
+  - name: AMOUNT
+  - name: STATUS
+  - name: ORDER_DT
+- name: stg_sq_customers
+  description: Source Qualifier SQ_CUSTOMERS
+  columns:
+  - name: CUST_ID
+  - name: CUST_NAME
+- name: stg_sq_orders
+  description: Source Qualifier SQ_ORDERS
+  columns:
+  - name: CUST_ID
+  - name: AMOUNT
+- name: stg_sq_orders_customers
+  description: Source Qualifier SQ_ORDERS_CUSTOMERS
+  columns:
+  - name: ORDER_ID
+  - name: CUST_ID
+  - name: AMOUNT
+  - name: STATUS
+  - name: ORDER_DT
+  - name: CUST_NAME
